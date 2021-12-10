@@ -7,11 +7,16 @@ class Vector2D
 public:
     Vector2D(double x = 0.0, double y = 0.0);
 
-    double x() const;
-    double y() const;
+    inline double x() const;
+    inline double y() const;
 
-    void setX(double x);
-    void setY(double y);
+    inline void setX(double x);
+    inline void setY(double y);
+
+    inline void dot(const Vector2D& other);
+    inline void cross(const Vector2D& other);
+    static inline double dot(const Vector2D& v1, const Vector2D& v2);
+    static inline Vector2D cross(const Vector2D& v1, const Vector2D& v2);
 
     Vector2D &operator*=(double factor);
     Vector2D &operator*=(const Vector2D &other);
@@ -24,7 +29,7 @@ public:
     double &operator[](int i);
     double operator[](int i) const;
 
-private:
+protected:
     double m_x;
     double m_y;
 };
