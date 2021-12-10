@@ -1,7 +1,6 @@
 #ifndef VECTOR2D_H
 #define VECTOR2D_H
 
-
 class Vector2D
 {
 public:
@@ -13,10 +12,11 @@ public:
     inline void setX(double x);
     inline void setY(double y);
 
-    inline void dot(const Vector2D& other);
-    inline void cross(const Vector2D& other);
-    static inline double dot(const Vector2D& v1, const Vector2D& v2);
-    static inline Vector2D cross(const Vector2D& v1, const Vector2D& v2);
+    inline double dot(const Vector2D &other) const;
+    inline double cross(const Vector2D &other) const;
+    inline void normalize();
+    inline Vector2D normalized() const;
+    inline double length() const;
 
     Vector2D &operator*=(double factor);
     Vector2D &operator*=(const Vector2D &other);
@@ -26,8 +26,8 @@ public:
     Vector2D &operator/=(const Vector2D &other);
     Vector2D &operator-=(const Vector2D &other);
 
-    double &operator[](int i);
-    double operator[](int i) const;
+    double &operator[](const int i);
+    double operator[](const int i) const;
 
 protected:
     double m_x;
