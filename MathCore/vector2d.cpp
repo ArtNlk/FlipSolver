@@ -142,18 +142,10 @@ double &Vector2D::operator[](int i)
 
 double Vector2D::operator[](int i) const
 {
-    switch (i)
+    if(i < 0 || i >= 2)
     {
-    case 0:
-        return m_x;
-        break;
-
-    case 1:
-        return m_y;
-        break;
-
-    default:
         throw std::out_of_range("Vector2D const indexing out of range!");
-        break;
     }
+
+    return (&m_x)[i];
 }

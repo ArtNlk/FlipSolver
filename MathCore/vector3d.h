@@ -14,10 +14,22 @@ public:
     inline void setY(double y);
     inline void setZ(double z);
 
-    inline void dot(const Vector3D& other);
-    inline void cross(const Vector3D& other);
-    static inline double dot(const Vector3D& v1, const Vector3D& v2);
-    static inline Vector3D cross(const Vector3D& v1, const Vector3D& v2);
+    inline double dot(const Vector3D &other) const;
+    inline Vector3D cross(const Vector3D &other) const;
+    inline void normalize();
+    inline Vector3D normalized() const;
+    inline double length() const;
+
+    Vector3D &operator*=(double factor);
+    Vector3D &operator*=(const Vector3D &other);
+    Vector3D &operator+=(const Vector3D &other);
+
+    Vector3D &operator/=(double divisor);
+    Vector3D &operator/=(const Vector3D &other);
+    Vector3D &operator-=(const Vector3D &other);
+
+    double &operator[](const int i);
+    double operator[](const int i) const;
 
 protected:
     double m_x;
