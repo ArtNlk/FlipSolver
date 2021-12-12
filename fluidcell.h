@@ -10,13 +10,13 @@ class FluidCell
 {
 public:
 
-    enum CellState : char {
+    enum CellMaterial : char {
         AIR   = 0,
         FLUID = 1,
         SOLID = 2
     };
 
-    enum ParamIndex : char {
+    enum VelocityIndex : char {
         U = 0,
         V = 1,
         W = 2,
@@ -27,11 +27,17 @@ public:
 
     FluidCell();
 
-    inline CellState getState() const;
-    inline void setState(CellState state);
+    inline CellMaterial getMaterial() const;
+    inline void setMaterial(CellMaterial material);
 
     inline double getPressure() const;
     inline void setPressure(double pressure);
+
+    inline double getVelocity(VelocityIndex index);
+    inline void setVelocity(double velocity, VelocityIndex index);
+
+    inline std::shared_ptr<double> getVelocityPtr(VelocityIndex index);
+    inline void setVelocityPtr(std::shared_ptr<double> velocityPtr, VelocityIndex index);
 
     inline double u() const;
     inline void setU(double u);
@@ -70,7 +76,7 @@ public:
     inline void setNWPtr(std::shared_ptr<double> nwPtr);
 
 protected:
-    CellState m_state;
+    CellMaterial m_material;
     double m_pressure;
     std::vector<std::shared_ptr<double>> m_velocities;
 };

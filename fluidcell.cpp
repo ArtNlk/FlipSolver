@@ -1,7 +1,7 @@
 #include "fluidcell.h"
 
 FluidCell::FluidCell() :
-    m_state(AIR),
+    m_material(AIR),
     m_pressure(0),
     m_velocities()
 {
@@ -12,14 +12,14 @@ FluidCell::FluidCell() :
     }
 }
 
-FluidCell::CellState FluidCell::getState() const
+FluidCell::CellMaterial FluidCell::getMaterial() const
 {
-    return m_state;
+    return m_material;
 }
 
-void FluidCell::setState(CellState state)
+void FluidCell::setMaterial(CellMaterial material)
 {
-    m_state = state;
+    m_material = material;
 }
 
 double FluidCell::getPressure() const
@@ -30,6 +30,11 @@ double FluidCell::getPressure() const
 void FluidCell::setPressure(double pressure)
 {
     m_pressure = pressure;
+}
+
+double FluidCell::getVelocity(VelocityIndex index)
+{
+    return *m_velocities[index];
 }
 
 double FluidCell::u() const
