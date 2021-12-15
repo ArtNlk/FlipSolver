@@ -6,18 +6,27 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_subdirectory(MathCore)
+set(HEADERS
+    fluidgrid.h
+    flipsolver.h
+    fluidcell.h
+    vector2d.h
+    vector3d.h
+    gridmatrix.h)
 
-set(HEADERS fluidgrid.h flipsolver.h fluidcell.h)
-
-set(SOURCES fluidgrid.cpp flipsolver.cpp fluidcell.cpp)
+set(SOURCES
+    fluidgrid.cpp
+    flipsolver.cpp
+    fluidcell.cpp
+    vector2d.cpp
+    vector3d.cpp
+    gridmatrix.cpp)
 
 add_library(FlipSolver STATIC
   ${HEADERS}
   ${SOURCES}
 )
 
-include_directories(MathCore)
 target_link_libraries(FlipSolver MathCore)
 
 #set(Boost_USE_STATIC_LIBS        ON)

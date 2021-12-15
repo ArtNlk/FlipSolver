@@ -31,12 +31,32 @@ void FluidCell::setPressure(double pressure)
     m_pressure = pressure;
 }
 
-double FluidCell::getVelocity(CellVelocityIndex index)
+double FluidCell::getVelocity(CellVectorIndex index)
 {
     return (&m_u)[index];
 }
 
-void FluidCell::setVelocity(double velocity, CellVelocityIndex index)
+void FluidCell::setVelocity(double velocity, CellVectorIndex index)
 {
     (&m_u)[index] = velocity;
+}
+
+double FluidCell::getAdiag()
+{
+    return m_Adiag;
+}
+
+void FluidCell::setAdiag(double Adiag)
+{
+    m_Adiag = Adiag;
+}
+
+double FluidCell::getMatrixValue(CellVectorIndex index)
+{
+    return (&m_Ax)[index];
+}
+
+void FluidCell::setMatrixValue(double value, CellVectorIndex index)
+{
+    (&m_Ax)[index] = value;
 }
