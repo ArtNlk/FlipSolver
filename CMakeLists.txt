@@ -13,7 +13,8 @@ set(HEADERS
     vector2d.h
     vector3d.h
     gridmatrix.h
-    sparsematrix.h)
+    sparsematrix.h
+    dynamicsparsematrix.h)
 
 set(SOURCES
     fluidgrid.cpp
@@ -22,7 +23,8 @@ set(SOURCES
     vector2d.cpp
     vector3d.cpp
     gridmatrix.cpp
-    sparsematrix.cpp)
+    sparsematrix.cpp
+    dynamicsparsematrix.cpp)
 
 add_library(FlipSolver STATIC
   ${HEADERS}
