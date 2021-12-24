@@ -2,7 +2,8 @@
 
 DynamicSparseMatrix::DynamicSparseMatrix(int size, int avgRowLength) :
     m_size(size),
-    m_rows(size)
+    m_rows(size),
+    m_elementCount(0)
 {
     for(int i = 0; i < size; i++)
     {
@@ -21,6 +22,21 @@ int DynamicSparseMatrix::size() const
     return m_size;
 }
 
+int DynamicSparseMatrix::rowSize(int rowIndex) const
+{
+    return m_rows[rowIndex].size();
+}
+
+int DynamicSparseMatrix::elementCount() const
+{
+    return m_elementCount;
+}
+
+const std::vector<DynamicSparseMatrix::SparseRow> *DynamicSparseMatrix::data() const
+{
+    return &m_rows;
+}
+
 void DynamicSparseMatrix::setValue(int rowIndex, int columnIndex, double value)
 {
     SparseRow &targetRow = m_rows[rowIndex];
@@ -34,6 +50,7 @@ void DynamicSparseMatrix::setValue(int rowIndex, int columnIndex, double value)
         else if(targetRow[column].first > columnIndex)
         {
             targetRow.insert(targetRow.begin()+column,SparseRowUnit(column,value));
+            m_elementCount++;
             return;
         }
     }

@@ -15,12 +15,19 @@ public:
     void resize(int newSize);
     int size() const;
 
+    inline int rowSize(int rowIndex) const;
+
+    inline int elementCount() const;
+
+    std::vector<SparseRow> *data() const;
+
     void setValue(int rowIndex, int columnIndex, double value);
     double getValue(int rowIndex, int columnIndex) const;
 
 protected:
     std::vector<SparseRow> m_rows;
     int m_size;
+    int m_elementCount;
 };
 
 #endif // DYNAMICSPARSEMATRIX_H
