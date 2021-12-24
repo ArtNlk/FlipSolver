@@ -2,19 +2,23 @@
 #define SPARSETRIMATRIX_H
 
 #include <vector>
+#include <utility>
+
+#include "dynamicsparsematrix.h"
 
 class SparseMatrix
 {
 public:
-    SparseMatrix(int size);
+    typedef std::pair<int,double> StaticRowUnit;
+
+    SparseMatrix(const DynamicSparseMatrix &dynamicMatrix);
 
     double getValueAt(int row, int col);
 
     std::vector<double> operator*(const std::vector<double> &v);
 
 protected:
-    std::vector<double> m_values;
-    std::vector<int> m_colIndex;
+    std::vector<StaticRowUnit> m_values;
     std::vector<int> m_rowStart;
     int m_size;
 };
