@@ -12,7 +12,6 @@ public:
 
     DynamicSparseMatrix(int size, int avgRowLength = 7);
 
-
     void resize(int newSize);
     int size() const;
 

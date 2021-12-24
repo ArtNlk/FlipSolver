@@ -6,6 +6,17 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/e2239ee6043f73722e7aa812a459f54a28552929.zip
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
+add_subdirectory(tests)
+
 set(HEADERS
     fluidgrid.h
     flipsolver.h
@@ -30,8 +41,6 @@ add_library(FlipSolver STATIC
   ${HEADERS}
   ${SOURCES}
 )
-
-target_link_libraries(FlipSolver MathCore)
 
 #set(Boost_USE_STATIC_LIBS        ON)
 #set(Boost_USE_DEBUG_LIBS         ON)
