@@ -19,7 +19,7 @@ public:
 
     inline int elementCount() const;
 
-    std::vector<SparseRow> *data() const;
+    const std::vector<SparseRow> *data() const;
 
     void setValue(int rowIndex, int columnIndex, double value);
     double getValue(int rowIndex, int columnIndex) const;

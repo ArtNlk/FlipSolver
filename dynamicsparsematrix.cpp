@@ -40,7 +40,7 @@ const std::vector<DynamicSparseMatrix::SparseRow> *DynamicSparseMatrix::data() c
 void DynamicSparseMatrix::setValue(int rowIndex, int columnIndex, double value)
 {
     SparseRow &targetRow = m_rows[rowIndex];
-    for(int column = 0; column < m_size; column++)
+    for(int column = 0; column < targetRow.size(); column++)
     {
         if(targetRow[column].first == columnIndex)
         {
