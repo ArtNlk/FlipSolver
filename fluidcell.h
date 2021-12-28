@@ -6,6 +6,8 @@
 #include <memory>
 #include <vector>
 
+#include <iostream>
+
 class FluidCell
 {
 public:
@@ -30,8 +32,8 @@ public:
     inline double getPressure() const {return m_pressure;}
     inline void setPressure(double pressure) {m_pressure = pressure;}
 
-    inline double getVelocity(CellVectorIndex index) {return (&m_u)[index];}
-    inline void setVelocity(double velocity, CellVectorIndex index) {(&m_u)[index] = velocity;}
+    inline double getVelocity(CellVectorIndex index) {return (&this->m_u)[index];}
+    inline void setVelocity(double velocity, CellVectorIndex index) {(&this->m_u)[index] = velocity;}
 
 protected:
     CellMaterial m_material;

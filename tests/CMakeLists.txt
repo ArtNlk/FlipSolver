@@ -6,6 +6,7 @@ add_executable(
   FlipTests
   test_test.cc
   DynamicSparseMatrixTests.cc
+  FluidGridTests.cc
 )
 
 target_link_libraries(
