@@ -21,17 +21,61 @@ public:
 
     FluidGrid(int sizeI, int sizeJ, int sizeK);
 
-    inline void setMaterial(int i, int j, int k, FluidCell::CellMaterial material);
-    inline FluidCell::CellMaterial getMaterial(int i, int j, int k);
+    inline void setMaterial(int i, int j, int k, FluidCell::CellMaterial material)
+    {
+        m_cells[linearIndex(i,j,k)].setMaterial(material);
+    }
 
-    inline void setCellVelocity(int i, int j, int k, FluidGrid::GridVectorIndex index, double velocity);
-    inline double getCellVelocity(int i, int j, int k, FluidGrid::GridVectorIndex index);
+    inline FluidCell::CellMaterial getMaterial(int i, int j, int k)
+    {
+        return m_cells[linearIndex(i,j,k)].getMaterial();
+    }
 
-    inline void setAdiag(int i, int j, int k, double value);
-    inline double getAdiag(int i, int j, int k);
+    inline void setCellVelocity(int i, int j, int k, FluidGrid::GridVectorIndex index, double velocity)
+    {
+        switch (index) {
+            case FluidGrid::U:
+            case FluidGrid::V:
+            case FluidGrid::W:
+                m_cells[linearIndex(i,j,k)].setVelocity(velocity,static_cast<FluidCell::CellVectorIndex>(index));
+                break;
 
-    inline void setCellMatrixEntry(int i, int j, int k, FluidGrid::GridVectorIndex index, double value);
-    inline double getCellMatrixEntry(int i, int j, int k, FluidGrid::GridVectorIndex index);
+            case FluidGrid::NU:
+                m_cells[linearIndex(i-1,j,k)].setVelocity(velocity,static_cast<FluidCell::CellVectorIndex>(index-3));
+                break;
+
+            case FluidGrid::NV:
+                m_cells[linearIndex(i,j-1,k)].setVelocity(velocity,static_cast<FluidCell::CellVectorIndex>(index-3));
+                break;
+
+            case FluidGrid::NW:
+                m_cells[linearIndex(i,j,k-1)].setVelocity(velocity,static_cast<FluidCell::CellVectorIndex>(index-3));
+                break;
+        }
+    }
+
+    inline double getCellVelocity(int i, int j, int k, FluidGrid::GridVectorIndex index)
+    {
+        switch (index) {
+            case FluidGrid::U:
+            case FluidGrid::V:
+            case FluidGrid::W:
+                return m_cells[linearIndex(i,j,k)].getVelocity(static_cast<FluidCell::CellVectorIndex>(index));
+                break;
+
+            case FluidGrid::NU:
+                return m_cells[linearIndex(i-1,j,k)].getVelocity(static_cast<FluidCell::CellVectorIndex>(index-3));
+                break;
+
+            case FluidGrid::NV:
+                return m_cells[linearIndex(i,j-1,k)].getVelocity(static_cast<FluidCell::CellVectorIndex>(index-3));
+                break;
+
+            case FluidGrid::NW:
+                return m_cells[linearIndex(i,j,k-1)].getVelocity(static_cast<FluidCell::CellVectorIndex>(index-3));
+                break;
+        }
+    }
 
 private:
     std::vector<FluidCell> m_cells;
@@ -39,7 +83,10 @@ private:
     int m_sizeJ;
     int m_sizeK;
 
-    inline int linearIndex(int i, int j, int k);
+    inline int linearIndex(int i, int j, int k)
+    {
+        return k*m_sizeI*m_sizeJ + j*m_sizeI+i;
+    }
 };
 
 #endif // FLUIDGRID_H

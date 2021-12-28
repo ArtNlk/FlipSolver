@@ -24,20 +24,14 @@ public:
 
     FluidCell();
 
-    inline CellMaterial getMaterial() const;
-    inline void setMaterial(CellMaterial material);
+    inline CellMaterial getMaterial() const {return m_material;}
+    inline void setMaterial(CellMaterial material) {m_material = material;}
 
-    inline double getPressure() const;
-    inline void setPressure(double pressure);
+    inline double getPressure() const {return m_pressure;}
+    inline void setPressure(double pressure) {m_pressure = pressure;}
 
-    inline double getVelocity(CellVectorIndex index);
-    inline void setVelocity(double velocity, CellVectorIndex index);
-
-    inline double getAdiag();
-    inline void setAdiag(double Adiag);
-
-    inline double getMatrixValue(CellVectorIndex index);
-    inline void setMatrixValue(double value, CellVectorIndex index);
+    inline double getVelocity(CellVectorIndex index) {return (&m_u)[index];}
+    inline void setVelocity(double velocity, CellVectorIndex index) {(&m_u)[index] = velocity;}
 
 protected:
     CellMaterial m_material;
@@ -45,10 +39,6 @@ protected:
     double m_u;
     double m_v;
     double m_w;
-    double m_Adiag;
-    double m_Ax;
-    double m_Ay;
-    double m_Az;
 };
 
 #endif // FLUIDCELL_H
