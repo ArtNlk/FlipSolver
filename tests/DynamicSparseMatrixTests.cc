@@ -5,7 +5,6 @@
 class DynamicSparseMatrixTest : public ::testing::Test {
 public:
     DynamicSparseMatrixTest() :
-        zeroMatrix(0),
         square3Matrix(3),
         diag100Matrix(100)
     {
@@ -28,7 +27,6 @@ protected:
 
     void TearDown() override {}
 
-    DynamicSparseMatrix zeroMatrix;
     DynamicSparseMatrix square3Matrix;
     DynamicSparseMatrix diag100Matrix;
 };
@@ -43,10 +41,24 @@ TEST_F(DynamicSparseMatrixTest,DynamicMatrixReading)
         }
     }
 
-    diag100Matrix = DynamicSparseMatrix(100);
-
     for(int i = 0; i < 100; i++)
     {
-        EXPECT_EQ(square3Matrix.getValue(i,i),i);
+        for(int j = 0; j < 100; j++)
+        {
+            if(i == j)
+            {
+                EXPECT_EQ(diag100Matrix.getValue(i,j),i);
+            }
+            else
+            {
+                EXPECT_EQ(diag100Matrix.getValue(i,j),0);
+            }
+        }
     }
+}
+
+TEST_F(DynamicSparseMatrixTest,DynamicMatrixElementCount)
+{
+    EXPECT_EQ(square3Matrix.elementCount(),9);
+    EXPECT_EQ(diag100Matrix.elementCount(),100);
 }

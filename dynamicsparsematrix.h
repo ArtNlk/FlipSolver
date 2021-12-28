@@ -15,11 +15,11 @@ public:
     void resize(int newSize);
     int size() const;
 
-    inline int rowSize(int rowIndex) const;
+    inline int rowSize(int rowIndex) const { return m_rows[rowIndex].size();}
 
-    inline int elementCount() const;
+    inline int elementCount() const { return m_elementCount;}
 
-    const std::vector<SparseRow> *data() const;
+    inline const std::vector<SparseRow> *data() const { return &m_rows;}
 
     void setValue(int rowIndex, int columnIndex, double value);
     double getValue(int rowIndex, int columnIndex) const;
