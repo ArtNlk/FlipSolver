@@ -13,7 +13,7 @@ public:
 
     SparseMatrix(const DynamicSparseMatrix &dynamicMatrix);
 
-    double getValueAt(int row, int col);
+    double getValue(int row, int col);
 
     std::vector<double> operator*(const std::vector<double> &v);
 

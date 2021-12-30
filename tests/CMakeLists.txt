@@ -7,6 +7,7 @@ add_executable(
   test_test.cc
   DynamicSparseMatrixTests.cc
   FluidGridTests.cc
+  SparseMatrixTests.cc
 )
 
 target_link_libraries(

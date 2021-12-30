@@ -17,7 +17,7 @@ SparseMatrix::SparseMatrix(const DynamicSparseMatrix &dynamicMatrix) :
     const std::vector<DynamicSparseMatrix::SparseRow> *rows = dynamicMatrix.data();
     for(int i = 0; i < m_size; i++)
     {
-        for(int j = 0; j < rows->size(); j++)
+        for(int j = 0; j < rows[i].size(); j++)
         {
             m_values[totalIndex] = (*rows)[i][j];
             totalIndex++;
@@ -25,7 +25,7 @@ SparseMatrix::SparseMatrix(const DynamicSparseMatrix &dynamicMatrix) :
     }
 }
 
-double SparseMatrix::getValueAt(int row, int col)
+double SparseMatrix::getValue(int row, int col)
 {
     int rowStartIndex = m_rowStart[row];
     int rowEndIndex = m_rowStart[row+1];
