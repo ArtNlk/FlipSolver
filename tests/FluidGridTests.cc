@@ -2,14 +2,15 @@
 
 #include "fluidgrid.h"
 
-static const int smallSizeI = 3;
-static const int smallSizeJ = 3;
-static const int smallSizeK = 3;
+static const int smallSizeI = 200;
+static const int smallSizeJ = 150;
+static const int smallSizeK = 100;
 
 class FluidGridTest : public ::testing::Test {
 public:
     FluidGridTest() :
-        gridSmall(smallSizeI,smallSizeJ,smallSizeK)
+        gridSmall(smallSizeI,smallSizeJ,smallSizeK),
+        gridSmallNeg(smallSizeI,smallSizeJ,smallSizeK)
     {
         for(int i = 0; i < smallSizeI; i++)
         {
@@ -20,10 +21,12 @@ public:
                     gridSmall.setCellVelocity(i,j,k,FluidGrid::U,i*10+j*smallSizeI + k*smallSizeI*smallSizeJ + 1);
                     gridSmall.setCellVelocity(i,j,k,FluidGrid::V,i*10+j*smallSizeI + k*smallSizeI*smallSizeJ + 2);
                     gridSmall.setCellVelocity(i,j,k,FluidGrid::W,i*10+j*smallSizeI + k*smallSizeI*smallSizeJ + 3);
-                    gridSmall.setCellVelocity(i,j,k,FluidGrid::NU,i*10+j*smallSizeI + k*smallSizeI*smallSizeJ + 4);
-                    gridSmall.setCellVelocity(i,j,k,FluidGrid::NV,i*10+j*smallSizeI + k*smallSizeI*smallSizeJ + 5);
-                    gridSmall.setCellVelocity(i,j,k,FluidGrid::NW,i*10+j*smallSizeI + k*smallSizeI*smallSizeJ + 6);
                     gridSmall.setMaterial(i,j,k,FluidCell::FLUID);
+
+                    gridSmallNeg.setCellVelocity(i,j,k,FluidGrid::NU,i*10+j*smallSizeI + k*smallSizeI*smallSizeJ + 1);
+                    gridSmallNeg.setCellVelocity(i,j,k,FluidGrid::NV,i*10+j*smallSizeI + k*smallSizeI*smallSizeJ + 2);
+                    gridSmallNeg.setCellVelocity(i,j,k,FluidGrid::NW,i*10+j*smallSizeI + k*smallSizeI*smallSizeJ + 3);
+                    gridSmallNeg.setMaterial(i,j,k,FluidCell::FLUID);
                 }
             }
         }
@@ -35,6 +38,7 @@ protected:
     void TearDown() override {}
 
     FluidGrid gridSmall;
+    FluidGrid gridSmallNeg;
 };
 
 TEST_F(FluidGridTest,GridReadTest)
@@ -48,10 +52,12 @@ TEST_F(FluidGridTest,GridReadTest)
                 EXPECT_EQ(gridSmall.getCellVelocity(i,j,k,FluidGrid::U),i*10+j*smallSizeI + k*smallSizeI*smallSizeJ + 1);
                 EXPECT_EQ(gridSmall.getCellVelocity(i,j,k,FluidGrid::V),i*10+j*smallSizeI + k*smallSizeI*smallSizeJ + 2);
                 EXPECT_EQ(gridSmall.getCellVelocity(i,j,k,FluidGrid::W),i*10+j*smallSizeI + k*smallSizeI*smallSizeJ + 3);
-                EXPECT_EQ(gridSmall.getCellVelocity(i,j,k,FluidGrid::NU),i*10+j*smallSizeI + k*smallSizeI*smallSizeJ + 4);
-                EXPECT_EQ(gridSmall.getCellVelocity(i,j,k,FluidGrid::NV),i*10+j*smallSizeI + k*smallSizeI*smallSizeJ + 5);
-                EXPECT_EQ(gridSmall.getCellVelocity(i,j,k,FluidGrid::NW),i*10+j*smallSizeI + k*smallSizeI*smallSizeJ + 6);
                 EXPECT_EQ(gridSmall.getMaterial(i,j,k),FluidCell::FLUID);
+
+                EXPECT_EQ(gridSmallNeg.getCellVelocity(i,j,k,FluidGrid::NU),i*10+j*smallSizeI + k*smallSizeI*smallSizeJ + 1);
+                EXPECT_EQ(gridSmallNeg.getCellVelocity(i,j,k,FluidGrid::NV),i*10+j*smallSizeI + k*smallSizeI*smallSizeJ + 2);
+                EXPECT_EQ(gridSmallNeg.getCellVelocity(i,j,k,FluidGrid::NW),i*10+j*smallSizeI + k*smallSizeI*smallSizeJ + 3);
+                EXPECT_EQ(gridSmallNeg.getMaterial(i,j,k),FluidCell::FLUID);
             }
         }
     }
