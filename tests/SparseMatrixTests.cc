@@ -13,7 +13,8 @@ public:
         fiveOnes(5,1),
         hundredOnes(100,1),
         oneToFive(5),
-        oneToHundred(100)
+        oneToHundred(100),
+        zeroTo99(100)
     {
         DynamicSparseMatrix tempSquare5matrix = DynamicSparseMatrix(5);
         DynamicSparseMatrix tempIdentity5matrix = DynamicSparseMatrix(5);
@@ -36,6 +37,7 @@ public:
         {
             tempDiag100matrix.setValue(i,i,i);
             oneToHundred[i] = i + 1;
+            zeroTo99[i] = i;
         }
 
         this->square5Matrix = SparseMatrix(tempSquare5matrix);
@@ -56,6 +58,7 @@ protected:
     std::vector<double> hundredOnes;
     std::vector<double> oneToFive;
     std::vector<double> oneToHundred;
+    std::vector<double> zeroTo99;
 };
 
 TEST_F(SparseMatrixTest,SpraseMatrixReadingTest)
@@ -82,4 +85,21 @@ TEST_F(SparseMatrixTest,SpraseMatrixReadingTest)
             }
         }
     }
+}
+
+TEST_F(SparseMatrixTest,SparseMatrixMultiplyTest)
+{
+    std::vector<double> resultFiveOnOnes = square5Matrix*fiveOnes;
+    std::vector<double> expectedFiveOnOnes = std::vector<double>(5,10);
+    EXPECT_EQ(resultFiveOnOnes,expectedFiveOnOnes);
+
+    std::vector<double> resultFiveOnFives = square5Matrix*oneToFive;
+    std::vector<double> expectedFiveOnFives = std::vector<double>(5,40);
+    EXPECT_EQ(resultFiveOnOnes,expectedFiveOnOnes);
+
+    std::vector<double> resultFiveOnIdentity = identity5Matrix*oneToFive;
+    EXPECT_EQ(resultFiveOnIdentity,oneToFive);
+
+    std::vector<double> resultHundredOnOnes = diag100Matrix*hundredOnes;
+    EXPECT_EQ(resultHundredOnOnes,zeroTo99);
 }
