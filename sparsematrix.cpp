@@ -40,7 +40,7 @@ double SparseMatrix::getValue(int row, int col)
     return 0;
 }
 
-std::vector<double> SparseMatrix::operator*(const std::vector<double> &v)
+std::vector<double> SparseMatrix::operator*(const std::vector<double> &v) const
 {
     std::vector<double> output(v.size());
     for(int i = 0; i < m_size; i++)

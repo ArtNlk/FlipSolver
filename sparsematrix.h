@@ -15,7 +15,12 @@ public:
 
     double getValue(int row, int col);
 
-    std::vector<double> operator*(const std::vector<double> &v);
+    inline int rowCount() const
+    {
+        return m_rowStart.size()-1;
+    };
+
+    std::vector<double> operator*(const std::vector<double> &v) const;
 
 protected:
     std::vector<StaticRowUnit> m_values;

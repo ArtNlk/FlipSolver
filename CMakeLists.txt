@@ -23,9 +23,10 @@ set(HEADERS
     fluidcell.h
     vector2d.h
     vector3d.h
-    gridmatrix.h
     sparsematrix.h
-    dynamicsparsematrix.h)
+    dynamicsparsematrix.h
+    pcgsolver.h
+    vmath.h)
 
 set(SOURCES
     fluidgrid.cpp
@@ -33,9 +34,10 @@ set(SOURCES
     fluidcell.cpp
     vector2d.cpp
     vector3d.cpp
-    gridmatrix.cpp
     sparsematrix.cpp
-    dynamicsparsematrix.cpp)
+    dynamicsparsematrix.cpp
+    pcgsolver.cpp
+    vmath.cpp)
 
 add_library(FlipSolver STATIC
   ${HEADERS}
