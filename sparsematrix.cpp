@@ -2,7 +2,10 @@
 
 SparseMatrix::SparseMatrix(const DynamicSparseMatrix &dynamicMatrix) :
     m_size(dynamicMatrix.size()),
-    m_rowStart(dynamicMatrix.size()+1)
+    m_rowStart(dynamicMatrix.size()+1),
+    m_gridSizeI(dynamicMatrix.gridSizeI()),
+    m_gridSizeJ(dynamicMatrix.gridSizeJ()),
+    m_gridSizeK(dynamicMatrix.gridSizeK())
 {
     m_values.resize(dynamicMatrix.elementCount());
 

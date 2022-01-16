@@ -21,6 +21,28 @@ public:
 
     FluidGrid(int sizeI, int sizeJ, int sizeK);
 
+    inline void getSize(int& out_sizeI, int& out_sizeJ, int& out_sizeK)
+    {
+        out_sizeI = m_sizeI;
+        out_sizeJ = m_sizeJ;
+        out_sizeK = m_sizeK;
+    }
+
+    inline int sizeI()
+    {
+        return m_sizeI;
+    }
+
+    inline int sizeJ()
+    {
+        return m_sizeJ;
+    }
+
+    inline int sizeK()
+    {
+        return m_sizeK;
+    }
+
     inline void setMaterial(int i, int j, int k, FluidCell::CellMaterial material)
     {
         m_cells[linearIndex(i,j,k)].setMaterial(material);
