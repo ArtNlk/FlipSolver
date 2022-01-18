@@ -47,6 +47,36 @@ public:
         return k*m_gridSizeI*m_gridSizeJ + j*m_gridSizeI+i;
     }
 
+    inline double adiag(int i, int j, int k)
+    {
+        int index = linearIndex(i,j,k);
+        return getValue(index,index);
+    }
+
+    inline double Ax(int i, int j, int k)
+    {
+        int rowIndex = linearIndex(i,j,k);
+        int colIndex = linearIndex(i+1,j,k);
+
+        return getValue(rowIndex,colIndex);
+    }
+
+    inline double Ay(int i, int j, int k)
+    {
+        int rowIndex = linearIndex(i,j,k);
+        int colIndex = linearIndex(i,j+1,k);
+
+        return getValue(rowIndex,colIndex);
+    }
+
+    inline double Az(int i, int j, int k)
+    {
+        int rowIndex = linearIndex(i,j,k);
+        int colIndex = linearIndex(i,j,k+1);
+
+        return getValue(rowIndex,colIndex);
+    }
+
     std::vector<double> operator*(const std::vector<double> &v) const;
 
 protected:
