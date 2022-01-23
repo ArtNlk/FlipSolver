@@ -11,6 +11,75 @@ DynamicSparseMatrix::DynamicSparseMatrix(int size, int avgRowLength) :
     }
 }
 
+DynamicSparseMatrix::DynamicSparseMatrix(FluidGrid &grid) :
+    m_size(grid.sizeI() * grid.sizeJ() * grid.sizeK()),
+    m_rows(grid.sizeI() * grid.sizeJ() * grid.sizeK()),
+    m_elementCount(0),
+    m_gridSizeI(grid.sizeI()),
+    m_gridSizeJ(grid.sizeJ()),
+    m_gridSizeK(grid.sizeK())
+{
+    for(int i = 0; i < m_size; i++)
+    {
+        m_rows[i].reserve(7);
+    }
+    double scale = grid.getDt() / (grid.getFluidDensity() * grid.getSideLength() * grid.getSideLength());
+
+    for(int i = 0; i < m_gridSizeI; i++)
+    {
+        for(int j = 0; j < m_gridSizeJ; j++)
+        {
+            for(int k = 0; k < m_gridSizeK; k++)
+            {
+                if(grid.getMaterial(i,j,k) == FluidCell::FLUID)
+                {
+                    //X Neighbors
+                    if(grid.getMaterial(i-1,j,k) == FluidCell::FLUID)
+                    {
+                        modifyAdiag(i,j,k,scale);
+                    }
+                    if(grid.getMaterial(i+1,j,k) == FluidCell::FLUID)
+                    {
+                        modifyAdiag(i,j,k,scale);
+                        modifyAx(i,j,k,-scale);
+                    } else if(grid.getMaterial(i+1,j,k) == FluidCell::AIR)
+                    {
+                        modifyAdiag(i,j,k,scale);
+                    }
+
+                    //Y Neighbors
+                    if(grid.getMaterial(i,j-1,k) == FluidCell::FLUID)
+                    {
+                        modifyAdiag(i,j,k,scale);
+                    }
+                    if(grid.getMaterial(i,j+1,k) == FluidCell::FLUID)
+                    {
+                        modifyAdiag(i,j,k,scale);
+                        modifyAy(i,j,k,-scale);
+                    } else if(grid.getMaterial(i,j+1,k) == FluidCell::AIR)
+                    {
+                        modifyAdiag(i,j,k,scale);
+                    }
+
+                    //Z Neighbors
+                    if(grid.getMaterial(i,j,k-1) == FluidCell::FLUID)
+                    {
+                        modifyAdiag(i,j,k,scale);
+                    }
+                    if(grid.getMaterial(i,j,k+1) == FluidCell::FLUID)
+                    {
+                        modifyAdiag(i,j,k,scale);
+                        modifyAz(i,j,k,-scale);
+                    } else if(grid.getMaterial(i,j,k+1) == FluidCell::AIR)
+                    {
+                        modifyAdiag(i,j,k,scale);
+                    }
+                }
+            }
+        }
+    }
+}
+
 void DynamicSparseMatrix::resize(int newSize)
 {
     m_size = newSize;

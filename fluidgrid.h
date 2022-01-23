@@ -19,7 +19,7 @@ public:
         NW = 5
     };
 
-    FluidGrid(int sizeI, int sizeJ, int sizeK);
+    FluidGrid(int sizeI, int sizeJ, int sizeK, double density, double dt, double gridSideLength);
 
     inline void getSize(int& out_sizeI, int& out_sizeJ, int& out_sizeK)
     {
@@ -41,6 +41,36 @@ public:
     inline int sizeK()
     {
         return m_sizeK;
+    }
+
+    inline void setFluidDensity(double density)
+    {
+        m_density = density;
+    }
+
+    inline double getFluidDensity()
+    {
+        return m_density;
+    }
+
+    inline void setDt(double dt)
+    {
+        m_dt = dt;
+    }
+
+    inline double getDt()
+    {
+        return m_dt;
+    }
+
+    inline void setSideLength(double sideLength)
+    {
+        m_gridSideLength = sideLength;
+    }
+
+    inline double getSideLength()
+    {
+        return m_gridSideLength;
     }
 
     inline void setMaterial(int i, int j, int k, FluidCell::CellMaterial material)
@@ -104,10 +134,13 @@ private:
     int m_sizeI;
     int m_sizeJ;
     int m_sizeK;
+    double m_density;
+    double m_dt;
+    double m_gridSideLength;
 
     inline int linearIndex(int i, int j, int k)
     {
-        return k*m_sizeI*m_sizeJ + j*m_sizeI+i;
+        return i*m_sizeJ*m_sizeK + j*m_sizeK+i;
     }
 };
 

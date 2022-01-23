@@ -9,11 +9,11 @@ class PCGSolver
 public:
     PCGSolver();
 
-    bool solve(const FluidGrid& grid, const SparseMatrix &matrix, std::vector<double> &result, const std::vector<double> &vec, int iterLimit = 200);
+    bool solve(const SparseMatrix &matrix, std::vector<double> &result, const std::vector<double> &vec, int iterLimit = 200);
 
 protected:
     void applyICPrecond(std::vector<double> &vector);
-    double calcPrecond(const FluidGrid &grid, const SparseMatrix &matrix, double value);
+    double calcPrecond(const SparseMatrix &matrix, double value);
 
     std::vector<double> m_residual;
     std::vector<double> m_aux;

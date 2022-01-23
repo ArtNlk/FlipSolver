@@ -44,7 +44,7 @@ public:
 
     inline int linearIndex(int i, int j, int k)
     {
-        return k*m_gridSizeI*m_gridSizeJ + j*m_gridSizeI+i;
+        return i*m_gridSizeJ*m_gridSizeK + j*m_gridSizeK+k;
     }
 
     inline double adiag(int i, int j, int k)

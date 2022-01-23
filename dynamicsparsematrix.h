@@ -14,6 +14,8 @@ public:
 
     DynamicSparseMatrix(int size, int avgRowLength = 7);
 
+    DynamicSparseMatrix(FluidGrid &grid);
+
     void resize(int newSize);
     int size() const;
 
@@ -44,6 +46,11 @@ public:
         return m_gridSizeK;
     }
 
+    inline int linearIndex(int i, int j, int k)
+    {
+        return i*m_gridSizeJ*m_gridSizeK + j*m_gridSizeK+k;
+    }
+
     inline int rowSize(int rowIndex) const { return m_rows[rowIndex].size();}
 
     inline int elementCount() const { return m_elementCount;}
@@ -61,6 +68,66 @@ protected:
     int m_gridSizeI;
     int m_gridSizeJ;
     int m_gridSizeK;
+
+    inline void setAdiag(int i, int j, int k, double value)
+    {
+        int index = linearIndex(i,j,k);
+        setValue(index, index, value);
+    }
+
+    inline void setAx(int i, int j, int k, double value)
+    {
+        int rowIndex = linearIndex(i,j,k);
+        int colIndex = linearIndex(i+1,j,k);
+
+        return setValue(rowIndex,colIndex, value);
+    }
+
+    inline void setAy(int i, int j, int k, double value)
+    {
+        int rowIndex = linearIndex(i,j,k);
+        int colIndex = linearIndex(i,j+1,k);
+
+        return setValue(rowIndex,colIndex, value);
+    }
+
+    inline void setAz(int i, int j, int k, double value)
+    {
+        int rowIndex = linearIndex(i,j,k);
+        int colIndex = linearIndex(i,j,k+1);
+
+        return setValue(rowIndex,colIndex, value);
+    }
+
+    inline void modifyAdiag(int i, int j, int k, double value)
+    {
+        int index = linearIndex(i,j,k);
+        setValue(index, index, getValue(index,index) + value);
+    }
+
+    inline void modifyAx(int i, int j, int k, double value)
+    {
+        int rowIndex = linearIndex(i,j,k);
+        int colIndex = linearIndex(i+1,j,k);
+
+        return setValue(rowIndex,colIndex, getValue(rowIndex, colIndex) + value);
+    }
+
+    inline void modifyAy(int i, int j, int k, double value)
+    {
+        int rowIndex = linearIndex(i,j,k);
+        int colIndex = linearIndex(i,j+1,k);
+
+        return setValue(rowIndex,colIndex, getValue(rowIndex, colIndex) + value);
+    }
+
+    inline void modifyAz(int i, int j, int k, double value)
+    {
+        int rowIndex = linearIndex(i,j,k);
+        int colIndex = linearIndex(i,j,k+1);
+
+        return setValue(rowIndex,colIndex, getValue(rowIndex, colIndex) + value);
+    }
 };
 
 #endif // DYNAMICSPARSEMATRIX_H
