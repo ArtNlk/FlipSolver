@@ -28,7 +28,7 @@ SparseMatrix::SparseMatrix(const DynamicSparseMatrix &dynamicMatrix) :
     }
 }
 
-double SparseMatrix::getValue(int row, int col)
+double SparseMatrix::getValue(int row, int col) const
 {
     int rowStartIndex = m_rowStart[row];
     int rowEndIndex = m_rowStart[row+1];

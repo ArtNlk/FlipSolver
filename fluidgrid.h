@@ -21,7 +21,7 @@ public:
 
     FluidGrid(int sizeI, int sizeJ, int sizeK, double density, double dt, double gridSideLength);
 
-    inline void getSize(int& out_sizeI, int& out_sizeJ, int& out_sizeK)
+    inline void getSize(int& out_sizeI, int& out_sizeJ, int& out_sizeK) const
     {
         out_sizeI = m_sizeI;
         out_sizeJ = m_sizeJ;

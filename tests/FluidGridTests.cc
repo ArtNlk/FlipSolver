@@ -9,8 +9,8 @@ static const int smallSizeK = 100;
 class FluidGridTest : public ::testing::Test {
 public:
     FluidGridTest() :
-        gridSmall(smallSizeI,smallSizeJ,smallSizeK),
-        gridSmallNeg(smallSizeI,smallSizeJ,smallSizeK)
+        gridSmall(smallSizeI,smallSizeJ,smallSizeK,1,1,1),
+        gridSmallNeg(smallSizeI,smallSizeJ,smallSizeK,1,1,1)
     {
         for(int i = 0; i < smallSizeI; i++)
         {

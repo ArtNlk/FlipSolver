@@ -1,5 +1,7 @@
 #include "dynamicsparsematrix.h"
 
+#include "sparsematrix.h"
+
 DynamicSparseMatrix::DynamicSparseMatrix(int size, int avgRowLength) :
     m_size(size),
     m_rows(size),
@@ -91,6 +93,11 @@ int DynamicSparseMatrix::size() const
     return m_size;
 }
 
+void DynamicSparseMatrix::setGridSize(const SparseMatrix &matrix)
+{
+    matrix.getGridSize(m_gridSizeI, m_gridSizeJ, m_gridSizeK);
+}
+
 void DynamicSparseMatrix::setValue(int rowIndex, int columnIndex, double value)
 {
     SparseRow &targetRow = m_rows[rowIndex];
@@ -124,4 +131,19 @@ double DynamicSparseMatrix::getValue(int rowIndex, int columnIndex) const
     }
 
     return 0;
+}
+
+bool DynamicSparseMatrix::getValue(int rowIndex, int columnIndex, double &out) const
+{
+    const SparseRow &targetRow = m_rows[rowIndex];
+    for(int column = 0; column < targetRow.size(); column++)
+    {
+        if(targetRow[column].first == columnIndex)
+        {
+            out = targetRow[column].second;
+            return true;
+        }
+    }
+
+    return false;
 }

@@ -6,6 +6,8 @@
 
 #include "fluidgrid.h"
 
+class SparseMatrix;
+
 class DynamicSparseMatrix
 {
 public:
@@ -19,10 +21,17 @@ public:
     void resize(int newSize);
     int size() const;
 
-    inline void setGridSize(FluidGrid &grid)
+    inline void setGridSize(const FluidGrid &grid)
     {
         grid.getSize(m_gridSizeI, m_gridSizeJ, m_gridSizeK);
     }
+
+    inline void setGridSize(const DynamicSparseMatrix &matrix)
+    {
+        matrix.getGridSize(m_gridSizeI, m_gridSizeJ, m_gridSizeK);
+    }
+
+    void setGridSize(const SparseMatrix &matrix);
 
     inline void getGridSize(int& out_gridSizeI, int& out_gridSizeJ, int& out_gridSizeK) const
     {
@@ -50,24 +59,6 @@ public:
     {
         return i*m_gridSizeJ*m_gridSizeK + j*m_gridSizeK+k;
     }
-
-    inline int rowSize(int rowIndex) const { return m_rows[rowIndex].size();}
-
-    inline int elementCount() const { return m_elementCount;}
-
-    inline const std::vector<SparseRow> *data() const { return &m_rows;}
-
-    void setValue(int rowIndex, int columnIndex, double value);
-    double getValue(int rowIndex, int columnIndex) const;
-
-protected:
-    std::vector<SparseRow> m_rows;
-    int m_size;
-    int m_elementCount;
-
-    int m_gridSizeI;
-    int m_gridSizeJ;
-    int m_gridSizeK;
 
     inline void setAdiag(int i, int j, int k, double value)
     {
@@ -128,6 +119,25 @@ protected:
 
         return setValue(rowIndex,colIndex, getValue(rowIndex, colIndex) + value);
     }
+
+    inline int rowSize(int rowIndex) const { return m_rows[rowIndex].size();}
+
+    inline int elementCount() const { return m_elementCount;}
+
+    inline const std::vector<SparseRow> *data() const { return &m_rows;}
+
+    void setValue(int rowIndex, int columnIndex, double value);
+    double getValue(int rowIndex, int columnIndex) const;
+    bool getValue(int rowIndex, int columnIndex, double &out) const;
+
+protected:
+    std::vector<SparseRow> m_rows;
+    int m_size;
+    int m_elementCount;
+
+    int m_gridSizeI;
+    int m_gridSizeJ;
+    int m_gridSizeK;
 };
 
 #endif // DYNAMICSPARSEMATRIX_H

@@ -2,6 +2,7 @@
 #define PCGSOLVER_H
 
 #include "sparsematrix.h"
+#include "dynamicsparsematrix.h"
 #include "fluidgrid.h"
 
 class PCGSolver
@@ -13,11 +14,13 @@ public:
 
 protected:
     void applyICPrecond(std::vector<double> &vector);
-    double calcPrecond(const SparseMatrix &matrix, double value);
+    double calcPrecond(const SparseMatrix &matrix);
+    double precond(const SparseMatrix &matrix, int i, int j, int k);
 
     std::vector<double> m_residual;
     std::vector<double> m_aux;
     std::vector<double> m_search;
+    DynamicSparseMatrix m_precondCache;
     static const double m_tol;
 };
 
