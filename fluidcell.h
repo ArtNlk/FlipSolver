@@ -32,8 +32,35 @@ public:
     inline double getPressure() const {return m_pressure;}
     inline void setPressure(double pressure) {m_pressure = pressure;}
 
-    inline double getVelocity(CellVectorIndex index) {return (&this->m_u)[index];}
-    inline void setVelocity(double velocity, CellVectorIndex index) {(&this->m_u)[index] = velocity;}
+    inline double getU() const
+    {
+        return m_u;
+    };
+
+    inline double getV() const
+    {
+        return m_v;
+    };
+
+    inline double getW() const
+    {
+        return m_w;
+    };
+
+    inline void setU(double value)
+    {
+        m_u = value;
+    };
+
+    inline void setV(double value)
+    {
+        m_v = value;
+    };
+
+    inline void setW(double value)
+    {
+        m_w = value;
+    };
 
 protected:
     CellMaterial m_material;
