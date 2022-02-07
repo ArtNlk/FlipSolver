@@ -35,7 +35,7 @@ bool PCGSolver::solve(const SparseMatrix &matrix, FluidGrid &grid, std::vector<d
         subMul(m_residual,m_residual,m_aux,alpha);
         if (maxAbs(m_residual) <= m_tol)
         {
-            return false;
+            return true;
         }
         m_aux = m_residual;
         applyICPrecond(matrix,m_aux,grid);
@@ -45,7 +45,7 @@ bool PCGSolver::solve(const SparseMatrix &matrix, FluidGrid &grid, std::vector<d
         sigma = newSigma;
     }
 
-    return true;
+    return false;
 }
 
 void PCGSolver::applyICPrecond(const SparseMatrix &matrix, std::vector<double> &vector, FluidGrid &grid)
@@ -69,11 +69,11 @@ void PCGSolver::applyICPrecond(const SparseMatrix &matrix, std::vector<double> &
         }
     }
 
-    for (int i = grid.sizeI(); i > 0; i--)
+    for (int i = grid.sizeI(); i >= 0; i--)
     {
-        for (int j = grid.sizeJ(); j > 0; j--)
+        for (int j = grid.sizeJ(); j >= 0; j--)
         {
-            for (int k = grid.sizeK(); k > 0; k--)
+            for (int k = grid.sizeK(); k >= 0; k--)
             {
                 if (grid.getMaterial(i,j,k) == FluidCell::FLUID)
                 {

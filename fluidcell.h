@@ -18,19 +18,70 @@ public:
         SOLID = 2
     };
 
-    enum CellVectorIndex : char {
-        U = 0,
-        V = 1,
-        W = 2,
-    };
-
     FluidCell();
 
     inline CellMaterial getMaterial() const {return m_material;}
     inline void setMaterial(CellMaterial material) {m_material = material;}
 
-    inline double getPressure() const {return m_pressure;}
-    inline void setPressure(double pressure) {m_pressure = pressure;}
+    inline void setKnownStatusU(bool status)
+    {
+        m_knownU = status;
+    }
+
+    inline void setKnownU()
+    {
+        m_knownU = true;
+    }
+
+    inline void setUnknownU()
+    {
+        m_knownU = false;
+    }
+
+    inline bool isKnownU() const
+    {
+        return m_knownU;
+    }
+
+    inline void setKnownStatusV(bool status)
+    {
+        m_knownV = status;
+    }
+
+    inline void setKnownV()
+    {
+        m_knownV = true;
+    }
+
+    inline void setUnknownV()
+    {
+        m_knownV = false;
+    }
+
+    inline bool isKnownV() const
+    {
+        return m_knownV;
+    }
+
+    inline void setKnownStatusW(bool status)
+    {
+        m_knownW = status;
+    }
+
+    inline void setKnownW()
+    {
+        m_knownW = true;
+    }
+
+    inline void setUnknownW()
+    {
+        m_knownW = false;
+    }
+
+    inline bool isKnownW() const
+    {
+        return m_knownW;
+    }
 
     inline double getU() const
     {
@@ -46,6 +97,21 @@ public:
     {
         return m_w;
     };
+
+    inline double& U()
+    {
+        return m_u;
+    }
+
+    inline double& V()
+    {
+        return m_v;
+    }
+
+    inline double& W()
+    {
+        return m_w;
+    }
 
     inline void setU(double value)
     {
@@ -64,10 +130,12 @@ public:
 
 protected:
     CellMaterial m_material;
-    double m_pressure;
     double m_u;
     double m_v;
     double m_w;
+    bool m_knownU;
+    bool m_knownV;
+    bool m_knownW;
 };
 
 #endif // FLUIDCELL_H

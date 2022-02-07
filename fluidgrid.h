@@ -9,16 +9,6 @@
 class FluidGrid
 {
 public:
-
-    enum GridVectorIndex : char {
-        U = 0,
-        V = 1,
-        W = 2,
-        NU = 3,
-        NV = 4,
-        NW = 5
-    };
-
     FluidGrid(int sizeI, int sizeJ, int sizeK, double density, double dt, double gridSideLength);
 
     inline void getSize(int& out_sizeI, int& out_sizeJ, int& out_sizeK) const
@@ -116,6 +106,11 @@ public:
     inline int linearIndex(int i, int j, int k) const
     {
         return i*m_sizeJ*m_sizeK + j*m_sizeK+i;
+    }
+
+    inline FluidCell& at(int i, int j, int k)
+    {
+        return m_cells.at(linearIndex(i,j,k));
     }
 
 private:
