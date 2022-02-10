@@ -105,7 +105,7 @@ public:
 
     inline int linearIndex(int i, int j, int k) const
     {
-        return i*m_sizeJ*m_sizeK + j*m_sizeK+i;
+        return i*m_sizeJ*m_sizeK + j*m_sizeK+k;
     }
 
     inline FluidCell& at(int i, int j, int k)
