@@ -18,6 +18,7 @@ FetchContent_MakeAvailable(googletest)
 add_subdirectory(tests)
 
 set(HEADERS
+    linearindexable3d.h
     fluidgrid.h
     flipsolver.h
     fluidcell.h
@@ -29,6 +30,7 @@ set(HEADERS
     vmath.h)
 
 set(SOURCES
+    linearindexable3d.cpp
     fluidgrid.cpp
     flipsolver.cpp
     fluidcell.cpp

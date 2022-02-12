@@ -5,10 +5,11 @@
 #include <utility>
 
 #include "fluidgrid.h"
+#include "linearindexable3d.h"
 
 class SparseMatrix;
 
-class DynamicSparseMatrix
+class DynamicSparseMatrix : public LinearIndexable3d
 {
 public:
     typedef std::pair<int,double> SparseRowUnit;
@@ -23,41 +24,21 @@ public:
 
     inline void setGridSize(const FluidGrid &grid)
     {
-        grid.getSize(m_gridSizeI, m_gridSizeJ, m_gridSizeK);
+        grid.getSize(m_sizeI, m_sizeJ, m_sizeK);
     }
 
     inline void setGridSize(const DynamicSparseMatrix &matrix)
     {
-        matrix.getGridSize(m_gridSizeI, m_gridSizeJ, m_gridSizeK);
+        matrix.getGridSize(m_sizeI, m_sizeJ, m_sizeK);
     }
 
     void setGridSize(const SparseMatrix &matrix);
 
     inline void getGridSize(int& out_gridSizeI, int& out_gridSizeJ, int& out_gridSizeK) const
     {
-        out_gridSizeI = m_gridSizeI;
-        out_gridSizeJ = m_gridSizeJ;
-        out_gridSizeK = m_gridSizeK;
-    }
-
-    inline int gridSizeI() const
-    {
-        return m_gridSizeI;
-    }
-
-    inline int gridSizeJ() const
-    {
-        return m_gridSizeJ;
-    }
-
-    inline int gridSizeK() const
-    {
-        return m_gridSizeK;
-    }
-
-    inline int linearIndex(int i, int j, int k)
-    {
-        return i*m_gridSizeJ*m_gridSizeK + j*m_gridSizeK+k;
+        out_gridSizeI = m_sizeI;
+        out_gridSizeJ = m_sizeJ;
+        out_gridSizeK = m_sizeK;
     }
 
     inline void setAdiag(int i, int j, int k, double value)
@@ -134,10 +115,6 @@ protected:
     std::vector<SparseRow> m_rows;
     int m_size;
     int m_elementCount;
-
-    int m_gridSizeI;
-    int m_gridSizeJ;
-    int m_gridSizeK;
 };
 
 #endif // DYNAMICSPARSEMATRIX_H

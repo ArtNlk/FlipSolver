@@ -19,11 +19,11 @@ void FlipSolver::project()
 
     double scale = m_grid.getDt() / (m_grid.getFluidDensity() * m_grid.getSideLength());
 
-    for (int i = m_grid.sizeI(); i >= 0; i--)
+    for (int i = m_grid.sizeI(); i >= 1; i--)
     {
-        for (int j = m_grid.sizeJ(); j >= 0; j--)
+        for (int j = m_grid.sizeJ(); j >= 1; j--)
         {
-            for (int k = m_grid.sizeK(); k >= 0; k--)
+            for (int k = m_grid.sizeK(); k >= 1; k--)
             {
                 //U part
                 if(m_grid.getMaterial(i-1,j,k) == FluidCell::FLUID || m_grid.getMaterial(i,j,k) == FluidCell::FLUID)
@@ -84,11 +84,11 @@ void FlipSolver::calcRhs(std::vector<double> &rhs)
 {
     double scale = 1/m_grid.getSideLength();
 
-    for (int i = 0; i < m_grid.sizeI(); i++)
+    for (int i = 1; i < m_grid.sizeI(); i++)
     {
-        for (int j = 0; j < m_grid.sizeJ(); j++)
+        for (int j = 1; j < m_grid.sizeJ(); j++)
         {
-            for (int k = 0; k < m_grid.sizeK(); k++)
+            for (int k = 1; k < m_grid.sizeK(); k++)
             {
                 if (m_grid.getMaterial(i,j,k) == FluidCell::FLUID)
                 {

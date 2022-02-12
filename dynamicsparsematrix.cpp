@@ -3,6 +3,7 @@
 #include "sparsematrix.h"
 
 DynamicSparseMatrix::DynamicSparseMatrix(int size, int avgRowLength) :
+    LinearIndexable3d(-1,-1,-1),
     m_size(size),
     m_rows(size),
     m_elementCount(0)
@@ -14,12 +15,10 @@ DynamicSparseMatrix::DynamicSparseMatrix(int size, int avgRowLength) :
 }
 
 DynamicSparseMatrix::DynamicSparseMatrix(FluidGrid &grid) :
+    LinearIndexable3d(grid.sizeI(),grid.sizeJ(),grid.sizeK()),
     m_size(grid.sizeI() * grid.sizeJ() * grid.sizeK()),
     m_rows(grid.sizeI() * grid.sizeJ() * grid.sizeK()),
-    m_elementCount(0),
-    m_gridSizeI(grid.sizeI()),
-    m_gridSizeJ(grid.sizeJ()),
-    m_gridSizeK(grid.sizeK())
+    m_elementCount(0)
 {
     for(int i = 0; i < m_size; i++)
     {
@@ -27,11 +26,11 @@ DynamicSparseMatrix::DynamicSparseMatrix(FluidGrid &grid) :
     }
     double scale = grid.getDt() / (grid.getFluidDensity() * grid.getSideLength() * grid.getSideLength());
 
-    for(int i = 0; i < m_gridSizeI; i++)
+    for(int i = 0; i < m_sizeI; i++)
     {
-        for(int j = 0; j < m_gridSizeJ; j++)
+        for(int j = 0; j < m_sizeJ; j++)
         {
-            for(int k = 0; k < m_gridSizeK; k++)
+            for(int k = 0; k < m_sizeK; k++)
             {
                 if(grid.getMaterial(i,j,k) == FluidCell::FLUID)
                 {
@@ -95,7 +94,7 @@ int DynamicSparseMatrix::size() const
 
 void DynamicSparseMatrix::setGridSize(const SparseMatrix &matrix)
 {
-    matrix.getGridSize(m_gridSizeI, m_gridSizeJ, m_gridSizeK);
+    matrix.getGridSize(m_sizeI, m_sizeJ, m_sizeK);
 }
 
 void DynamicSparseMatrix::setValue(int rowIndex, int columnIndex, double value)

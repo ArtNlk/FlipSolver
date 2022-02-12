@@ -52,11 +52,11 @@ void PCGSolver::applyICPrecond(const SparseMatrix &matrix, std::vector<double> &
 {
     double t = 0;
     std::vector<double> temp(vector.size(),0);
-    for (int i = 0; i < grid.sizeI(); i++)
+    for (int i = 1; i < grid.sizeI(); i++)
     {
-        for (int j = 0; j < grid.sizeJ(); j++)
+        for (int j = 1; j < grid.sizeJ(); j++)
         {
-            for (int k = 0; k < grid.sizeK(); k++)
+            for (int k = 1; k < grid.sizeK(); k++)
             {
                 if (grid.getMaterial(i,j,k) == FluidCell::FLUID)
                 {
@@ -69,11 +69,11 @@ void PCGSolver::applyICPrecond(const SparseMatrix &matrix, std::vector<double> &
         }
     }
 
-    for (int i = grid.sizeI(); i >= 0; i--)
+    for (int i = grid.sizeI(); i >= 1; i--)
     {
-        for (int j = grid.sizeJ(); j >= 0; j--)
+        for (int j = grid.sizeJ(); j >= 1; j--)
         {
-            for (int k = grid.sizeK(); k >= 0; k--)
+            for (int k = grid.sizeK(); k >= 1; k--)
             {
                 if (grid.getMaterial(i,j,k) == FluidCell::FLUID)
                 {
@@ -91,11 +91,11 @@ void PCGSolver::calcPrecond(const SparseMatrix &matrix, FluidGrid &grid)
 {
     m_precondCache = DynamicSparseMatrix(1);
     m_precondCache.setGridSize(matrix);
-    for (int i = 0; i < grid.sizeI(); i++)
+    for (int i = 1; i < grid.sizeI(); i++)
     {
-        for (int j = 0; j < grid.sizeJ(); j++)
+        for (int j = 1; j < grid.sizeJ(); j++)
         {
-            for (int k = 0; k < grid.sizeK(); k++)
+            for (int k = 1; k < grid.sizeK(); k++)
             {
                 if (grid.getMaterial(i,j,k) == FluidCell::FLUID)
                 {

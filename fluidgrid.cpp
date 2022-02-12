@@ -1,9 +1,7 @@
 #include "fluidgrid.h"
 
 FluidGrid::FluidGrid(int sizeI, int sizeJ, int sizeK, double density, double dt, double gridSideLength):
-    m_sizeI(sizeI+1),
-    m_sizeJ(sizeJ+1),
-    m_sizeK(sizeK+1),
+    LinearIndexable3d(sizeI,sizeJ,sizeK),
     m_density(density),
     m_dt(dt),
     m_gridSideLength(gridSideLength)

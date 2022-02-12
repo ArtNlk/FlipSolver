@@ -1,11 +1,9 @@
 #include "sparsematrix.h"
 
 SparseMatrix::SparseMatrix(const DynamicSparseMatrix &dynamicMatrix) :
+    LinearIndexable3d(dynamicMatrix.sizeI(), dynamicMatrix.sizeJ(), dynamicMatrix.sizeK()),
     m_size(dynamicMatrix.size()),
-    m_rowStart(dynamicMatrix.size()+1),
-    m_gridSizeI(dynamicMatrix.gridSizeI()),
-    m_gridSizeJ(dynamicMatrix.gridSizeJ()),
-    m_gridSizeK(dynamicMatrix.gridSizeK())
+    m_rowStart(dynamicMatrix.size()+1)
 {
     m_values.resize(dynamicMatrix.elementCount());
 

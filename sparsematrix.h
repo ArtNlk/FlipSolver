@@ -5,8 +5,9 @@
 #include <utility>
 
 #include "dynamicsparsematrix.h"
+#include "linearindexable3d.h"
 
-class SparseMatrix
+class SparseMatrix : public LinearIndexable3d
 {
 public:
     typedef std::pair<int,double> StaticRowUnit;
@@ -22,29 +23,9 @@ public:
 
     inline void getGridSize(int& out_gridSizeI, int& out_gridSizeJ, int& out_gridSizeK) const
     {
-        out_gridSizeI = m_gridSizeI;
-        out_gridSizeJ = m_gridSizeJ;
-        out_gridSizeK = m_gridSizeK;
-    }
-
-    inline int gridSizeI() const
-    {
-        return m_gridSizeI;
-    }
-
-    inline int gridSizeJ() const
-    {
-        return m_gridSizeJ;
-    }
-
-    inline int gridSizeK() const
-    {
-        return m_gridSizeK;
-    }
-
-    inline int linearIndex(int i, int j, int k) const
-    {
-        return i*m_gridSizeJ*m_gridSizeK + j*m_gridSizeK+k;
+        out_gridSizeI = m_sizeI;
+        out_gridSizeJ = m_sizeJ;
+        out_gridSizeK = m_sizeK;
     }
 
     inline double Adiag(int i, int j, int k) const
@@ -83,10 +64,6 @@ protected:
     std::vector<StaticRowUnit> m_values;
     std::vector<int> m_rowStart;
     int m_size;
-
-    int m_gridSizeI;
-    int m_gridSizeJ;
-    int m_gridSizeK;
 };
 
 #endif // SPARSETRIMATRIX_H

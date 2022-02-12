@@ -5,8 +5,9 @@
 #include <memory>
 
 #include "fluidcell.h"
+#include "linearindexable3d.h"
 
-class FluidGrid
+class FluidGrid : public LinearIndexable3d
 {
 public:
     FluidGrid(int sizeI, int sizeJ, int sizeK, double density, double dt, double gridSideLength);
@@ -16,21 +17,6 @@ public:
         out_sizeI = m_sizeI-1;
         out_sizeJ = m_sizeJ-1;
         out_sizeK = m_sizeK-1;
-    }
-
-    inline int sizeI()
-    {
-        return m_sizeI-1;
-    }
-
-    inline int sizeJ()
-    {
-        return m_sizeJ-1;
-    }
-
-    inline int sizeK()
-    {
-        return m_sizeK-1;
     }
 
     inline void setFluidDensity(double density)
@@ -75,37 +61,32 @@ public:
 
     inline double getU(int i, int j, int k) const
     {
-        return m_cells[linearIndex(i+1,j+1,k+1)].getU();
+        return m_cells[linearIndex(i,j,k)].getU();
     }
 
     inline double getV(int i, int j, int k) const
     {
-        return m_cells[linearIndex(i+1,j+1,k+1)].getV();
+        return m_cells[linearIndex(i,j,k)].getV();
     }
 
     inline double getW(int i, int j, int k) const
     {
-        return m_cells[linearIndex(i+1,j+1,k+1)].getW();
+        return m_cells[linearIndex(i,j,k)].getW();
     }
 
     inline void setU(int i, int j, int k, double value)
     {
-        m_cells[linearIndex(i+1,j+1,k+1)].setU(value);
+        m_cells[linearIndex(i,j,k)].setU(value);
     }
 
     inline void setV(int i, int j, int k, double value)
     {
-        m_cells[linearIndex(i+1,j+1,k+1)].setV(value);
+        m_cells[linearIndex(i,j,k)].setV(value);
     }
 
     inline void setW(int i, int j, int k, double value)
     {
-        m_cells[linearIndex(i+1,j+1,k+1)].setW(value);
-    }
-
-    inline int linearIndex(int i, int j, int k) const
-    {
-        return i*m_sizeJ*m_sizeK + j*m_sizeK+k;
+        m_cells[linearIndex(i,j,k)].setW(value);
     }
 
     inline FluidCell& at(int i, int j, int k)
@@ -115,9 +96,6 @@ public:
 
 private:
     std::vector<FluidCell> m_cells;
-    int m_sizeI;
-    int m_sizeJ;
-    int m_sizeK;
     double m_density;
     double m_dt;
     double m_gridSideLength;
